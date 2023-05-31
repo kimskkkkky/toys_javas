@@ -1,3 +1,4 @@
+//array 초기화???
 public class PollInitailArrays {
     public String[] initialArrays(){
          String[][] polls = {
