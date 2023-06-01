@@ -1,6 +1,6 @@
 //array 초기화???
 package polls;
-import polls.PollScanners;
+
 public class PollInitailArrays {
     public String[][] initialArrays(){
          String[][] polls = {
@@ -13,15 +13,6 @@ public class PollInitailArrays {
                              { "4. 강의 진행 속도는 적절하였는가?" },
                              { "(1)전혀 아니다. (2)아니다. (3)그렇다. (4)매우그렇다." }
                             };
-                             for (int num = 0;  polls.length > num; num = num+2) {
-                                System.out.println(polls[num][0]); 
-                                System.out.println(polls[num+1][0]);
-                                
-                                PollScanners pollScanners = new PollScanners();  //답변 스캐너로 출력
-                                int[] Answer = pollScanners.Arrays();     
-                            }
-
          return polls ;
-    
-}
+        }
 }
