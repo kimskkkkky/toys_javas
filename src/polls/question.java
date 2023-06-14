@@ -47,13 +47,12 @@ public class question {
                   String Questionnumber = "QUESTION_0" + number;
                   System.out.println();
                   /// 결과 INSERT
-                  
 
                   String query3 = "INSERT INTO statistics\n" + //
                         "(ANSWER_ID, QUESTION_ID, USER_ID)\n" + //
                         "VALUES\n" + //
-                        "('"+ Answernumber +"', '"+ Questionnumber +"', \"USER_01\")";
-                        Statement statement3 = connection.createStatement();
+                        "('" + Answernumber + "', '" + Questionnumber + "', \"USER_01\")";
+                  Statement statement3 = connection.createStatement();
                   // ResultSet resultSet3 = statement3.executeUpdate(query3);
                   int count = statement3.executeUpdate(query3);
                   if (count > 0) {
@@ -61,18 +60,14 @@ public class question {
                   } else {
                      System.out.println("Insert failed, Try again");
                   }
-
                }
-
                // S를 누른 경우
-
             } else if (workKey.equals("S")) {
                System.out.println("설문 조사 통계");
                // E를 눌러서 설문을 종료하는 경우
             } else {
                System.out.println("----- 설문 종료 ------");
             }
-
          }
 
          // - query Edit
