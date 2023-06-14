@@ -28,18 +28,21 @@ public class question {
             if (workKey.equals("P")) {
 
                System.out.println("- 설문자 가능 명단(가입 완료)");
-               int number = 1;
+               int number = 0;
                HashMap<String, String> AnswerInfo = new HashMap<>();
-               String query2 = "SELECT QUESTION\n" + //
-                     "FROM question;";
+               String query2 = "SELECT QUE.QUESTION, ANS.ANSWER\n" + //
+                     "FROM question AS QUE\n" + //
+                     "INNER JOIN answer AS ANS\n" + //
+                     "ON QUE.QUESTION_ID = ANS.QUESTION_ID;";
                ResultSet resultSet = statement.executeQuery(query2);
                while (resultSet.next()) {
                   number = number + 1;
                   System.out.println(resultSet.getString("QUESTION"));
-                  System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
+                  System.out.println("(1)전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다");
                   String Answernumber = scanner.nextLine();
-                  AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION"));
+                  AnswerInfo.put(String.valueOf(number), resultSet.getString("ANSWER"));
                }
+               
               
 
                // S를 누른 경우
