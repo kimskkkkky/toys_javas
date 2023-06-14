@@ -38,9 +38,9 @@ public class question {
                   System.out.println(resultSet.getString("QUESTION"));
                   System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
                   String Answernumber = scanner.nextLine();
+                  AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION"));
                }
-
-               AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION_ID"));
+              
 
                // S를 누른 경우
             } else if (workKey.equals("S")) {
