@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PollsWithoutMethodCopy",
+            "request": "launch",
+            "mainClass": "PollsWithoutMethodCopy",
+            "projectName": "toys_javas_cb62ee54"
+        },
+        {
+            "type": "java",
+            "name": "PollsWithDB",
+            "request": "launch",
+            "mainClass": "PollsWithDB",
+            "projectName": "toys_javas_cb62ee54"
+        },
+        {
+            "type": "java",
             "name": "question",
             "request": "launch",
             "mainClass": "polls.question",

@@ -10,7 +10,7 @@ public class question {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_cars";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_pollswithdb";
          String user = "root";
          String password = "!yojulab*";
          Connection connection = DriverManager.getConnection(url, user, password); // network 자원사용
@@ -26,21 +26,30 @@ public class question {
             workKey = scanner.nextLine();
             // P를 누른 경우
             if (workKey.equals("P")) {
+
                System.out.println("- 설문자 가능 명단(가입 완료)");
                int number = 1;
                HashMap<String, String> AnswerInfo = new HashMap<>();
-               String query = "";
-               query = "SELECT QUESTION\n" + //
+               String query2 = "";
+               query2 = "SELECT QUESTION\n" + //
                      "FROM question;";
-               System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
-               String Answernumber = scanner.nextLine();
-               ResultSet resultSet = statement.executeQuery(query);
+               ResultSet resultSet = statement.executeQuery(query2);
                while (resultSet.next()) {
                   number = number + 1;
                   System.out.println(resultSet.getString("QUESTION"));
+                  String query3 = ""; 
+                  query3 = "SELECT ANSWER FROM answer";
+                  String resultSet3 = "";
+                  String statement3 = "";
+                  resultSet3 = statement3.executeQuery(query3);
+                  while (resultSet3.next()) {
+                  String Answernumber = scanner.nextLine(); 
+                  }
+                  System.out.println(resultSet.getString("QUESTION"));
+                  
+                  
                   AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION_ID"));
                }
-               String AnswerList = AnswerInfo.get(Answernumber);
 
                // S를 누른 경우
             } else if (workKey.equals("S")) {
