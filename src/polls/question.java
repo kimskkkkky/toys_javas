@@ -2,6 +2,9 @@ package polls;
 
 import java.util.HashMap;
 import java.util.Scanner;
+
+import javax.management.Query;
+
 import java.sql.*;
 
 public class question {
@@ -26,26 +29,45 @@ public class question {
             workKey = scanner.nextLine();
             // P를 누른 경우
             if (workKey.equals("P")) {
-
                System.out.println("- 설문자 가능 명단(가입 완료)");
                int number = 0;
                HashMap<String, String> AnswerInfo = new HashMap<>();
-               String query2 = "SELECT QUE.QUESTION, ANS.ANSWER\n" + //
-                     "FROM question AS QUE\n" + //
-                     "INNER JOIN answer AS ANS\n" + //
-                     "ON QUE.QUESTION_ID = ANS.QUESTION_ID;";
-               ResultSet resultSet = statement.executeQuery(query2);
-               while (resultSet.next()) {
+               String query2 = "SELECT QUESTION\n" + //
+                     "FROM question;";
+
+               Statement statement2 = connection.createStatement();
+               ResultSet resultSet2 = statement2.executeQuery(query2);
+               while (resultSet2.next()) {
                   number = number + 1;
-                  System.out.println(resultSet.getString("QUESTION"));
-                  System.out.println("(1)전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다");
-                  String Answernumber = scanner.nextLine();
-                  AnswerInfo.put(String.valueOf(number), resultSet.getString("ANSWER"));
+                  System.out.println(resultSet2.getString("QUESTION"));
+                  System.out.println();
+                  System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
+                  String reply = scanner.nextLine();
+                  String Answernumber = "ANSWER_0" + reply;
+                  String Questionnumber = "QUESTION_0" + number;
+                  System.out.println();
+                  /// 결과 INSERT
+                  
+                  
+                  
+                  
+                  String query3 = "INSERT INTO statistics\n" + //
+                        "(ANSWER_ID, QUESTION_ID, USER_ID)\n" + //
+                        "VALUES\n" + //
+                        "'" + Answernumber + "', '" + Questionnumber + "', '" + number + "'";
+                  Statement statement3 = connection.createStatement();
+
+                  int count = statement3.executeUpdate(query3);
+                  if (count > 0) {
+                     System.out.println("Insert successful");
+                  } else {
+                     System.out.println("Insert failed, Try again");
+                  }
+
                }
-               
-              
 
                // S를 누른 경우
+
             } else if (workKey.equals("S")) {
                System.out.println("설문 조사 통계");
                // E를 눌러서 설문을 종료하는 경우
