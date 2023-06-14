@@ -12,6 +12,7 @@ import java.sql.Statement;
 
 public class PollsWithDB {
    public static void main(String[] args) {
+
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
@@ -48,36 +49,51 @@ public class PollsWithDB {
                   System.out.println("-Error- 확인 후 입력 필요 ");
                } else {
                   System.out.println("-- 설문시작 -- ");
-
                }
+
                // S를 누른 경우
             } else if (workKey.equals("S")) {
-               HashMap<String, String> memHashMap = new HashMap<>();
-               int cnt = 1;
-               query="select `user`\n" + //
-                     "from `user`";
                ResultSet resultSet = statement.executeQuery(query);
-               while(resultSet.next()){
-                  memHashMap.put(String.valueOf(cnt), resultSet.getString("USER"));
+               int cnt = 1;
+               // HashMap<String, String> memHashMap = new HashMap<>();
+               // int cnt = 1;
+               // query = "select `user`\n" + //
+               // "from `user`";
+               // ResultSet resultSet = statement.executeQuery(query);
+               // String userString = resultSet.getString("USER");
+               // String queString = resultSet.getString("QUESTION");
+               // String ansString = resultSet.getString("answer");
+               // while (resultSet.next()) {
+               // memHashMap.put(String.valueOf(cnt), userString);
 
-               }
+               // }
 
-               HashMap<String, String> surHashMap = new HashMap<>();
-               cnt = 1;
-               query = "select QUESTION\n" + //
-                     "from question";
-               resultSet = statement.executeQuery(query);
-               while (resultSet.next()) {
-                  surHashMap.put(String.valueOf(cnt), resultSet.getString("QUESTION"));
-                  cnt = cnt + 1;
-               }
-               HashMap<String, String> ansHashMap = new HashMap<>();
-               query = "select ANSWER\n" + //
-                     "from answer";
-               resultSet = statement.executeQuery(query);
-               while (resultSet.next()) {
-                  ansHashMap.put(String.valueOf(cnt), resultSet.getString("ANSWER"));
-               }
+               // HashMap<String, String> surHashMap = new HashMap<>();
+               // cnt = 1;
+               // query = "select QUESTION\n" + //
+               // "from question";
+               // resultSet = statement.executeQuery(query);
+               // while (resultSet.next()) {
+               // surHashMap.put(String.valueOf(cnt), queString);
+               // cnt = cnt + 1;
+               // }
+
+               // HashMap<String, String> ansHashMap = new HashMap<>();
+               // cnt = 1;
+               // query = "SELECT answer\n" + //
+               // "from answer";
+               // resultSet = statement.executeQuery(query);
+               // while (resultSet.next()) {
+               // ansHashMap.put(String.valueOf(cnt), ansString);
+               // cnt = cnt + 1;
+               // }
+               // // 통계테이블 delete문
+               // query = "delete from statistics";
+               // statement.executeUpdate(query);
+               // // 통계테이블 insert문
+               // query = "INSERT INTO statistics(USER_ID, QUESTION_ID, ANSWER_ID)\n" + //
+               // "VALUES ('" + userString + "', '" + queString + "', '" + ansString + "')";
+               // statement.executeUpdate(query);
 
                System.out.println("설문 조사 통계");
                query = "select count(USER_ID) AS MEM\n" + // 총 유저의 숫자를 카운트한다.
@@ -109,9 +125,9 @@ public class PollsWithDB {
 
                // E를 눌러서 설문을 종료하는 경우
             } else {
-               System.out.println("----- 설문 종료 ------");
-            }
 
+            }
+            System.out.println("----- 설문 종료 ------");
          }
 
          // - query Edit
@@ -123,8 +139,11 @@ public class PollsWithDB {
 
          // 답변 맵
          // 질문 - 답변 입력
+         // scanner.close();
 
-      } catch (Exception e) {
+      } catch (
+
+      Exception e) {
          System.out.println(e.getMessage());
       }
    }
