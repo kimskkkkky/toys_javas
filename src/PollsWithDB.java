@@ -9,10 +9,9 @@ public class PollsWithDB {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_poll";
          String user = "root";
          String password = "!yojulab*";
-
 
          Connection connection = DriverManager.getConnection(url, user, password); // network 자원사용
          System.out.println("DB연결 성공\n");
@@ -32,12 +31,40 @@ public class PollsWithDB {
                query = "SELECT `user`.`USER`\n" + //
                      "FROM `user`\n";
                ResultSet resultSet = statement.executeQuery(query);
-                while (resultSet.next()) {
-               System.out.println(number+ "." + resultSet.getString("USER"));
-                number = number + 1;}
+               while (resultSet.next()) {
+                  System.out.println(number + "." + resultSet.getString("USER"));
+                  number = number + 1;
+               }
                // S를 누른 경우
             } else if (workKey.equals("S")) {
                System.out.println("설문 조사 통계");
+               query = "select count(USER_ID) AS MEM\n" + //
+                     "from statistics";
+               ResultSet resultSet = statement.executeQuery(query);
+               while (resultSet.next()) {
+                  System.out.println("- 총 설문자는 : " + resultSet.getInt("MEM"));
+
+               }
+               int cnt = 1;
+               System.out.println("--- 문항 내에서 최대 갯수 번호----");
+               query = "select QUESTION\n" + //
+                     "from question ";
+               resultSet = statement.executeQuery(query);
+               while (resultSet.next()) {
+                  System.out.println(resultSet.getString("QUESTION") +" : "+cnt);
+                  cnt += 1;
+               }
+
+               System.out.println("--- 답항 중심 ---");
+               query = "select ANSWER\n" + //
+                     "from answer ;\n" + //
+                     "";
+               resultSet = statement.executeQuery(query);
+               while (resultSet.next()) {
+                  System.out.println(resultSet.getString("ANSWER") +" : "+cnt);
+                  cnt += 1;
+               }
+
                // E를 눌러서 설문을 종료하는 경우
             } else {
                System.out.println("----- 설문 종료 ------");
