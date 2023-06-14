@@ -16,7 +16,7 @@ public class PollsWithDB {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_poll";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
          String user = "root";
          String password = "!yojulab*";
 
