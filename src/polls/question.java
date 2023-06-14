@@ -30,26 +30,17 @@ public class question {
                System.out.println("- 설문자 가능 명단(가입 완료)");
                int number = 1;
                HashMap<String, String> AnswerInfo = new HashMap<>();
-               String query2 = "";
-               query2 = "SELECT QUESTION\n" + //
+               String query2 = "SELECT QUESTION\n" + //
                      "FROM question;";
                ResultSet resultSet = statement.executeQuery(query2);
                while (resultSet.next()) {
                   number = number + 1;
                   System.out.println(resultSet.getString("QUESTION"));
-                  String query3 = ""; 
-                  query3 = "SELECT ANSWER FROM answer";
-                  String resultSet3 = "";
-                  String statement3 = "";
-                  resultSet3 = statement3.executeQuery(query3);
-                  while (resultSet3.next()) {
-                  String Answernumber = scanner.nextLine(); 
-                  }
-                  System.out.println(resultSet.getString("QUESTION"));
-                  
-                  
-                  AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION_ID"));
+                  System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
+                  String Answernumber = scanner.nextLine();
                }
+
+               AnswerInfo.put(String.valueOf(number), resultSet.getString("QUESTION_ID"));
 
                // S를 누른 경우
             } else if (workKey.equals("S")) {
