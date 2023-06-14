@@ -13,7 +13,7 @@ public class question {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_pollswithdb";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
          String user = "root";
          String password = "!yojulab*";
          Connection connection = DriverManager.getConnection(url, user, password); // network 자원사용
@@ -48,15 +48,13 @@ public class question {
                   System.out.println();
                   /// 결과 INSERT
                   
-                  
-                  
-                  
+
                   String query3 = "INSERT INTO statistics\n" + //
                         "(ANSWER_ID, QUESTION_ID, USER_ID)\n" + //
                         "VALUES\n" + //
-                        "'" + Answernumber + "', '" + Questionnumber + "', '" + number + "'";
-                  Statement statement3 = connection.createStatement();
-
+                        "('"+ Answernumber +"', '"+ Questionnumber +"', \"USER_01\")";
+                        Statement statement3 = connection.createStatement();
+                  // ResultSet resultSet3 = statement3.executeUpdate(query3);
                   int count = statement3.executeUpdate(query3);
                   if (count > 0) {
                      System.out.println("Insert successful");
@@ -87,6 +85,7 @@ public class question {
          // 답변 맵
          // 질문 - 답변 입력 함.
       } catch (Exception e) {
+         System.out.println(e.getMessage());
          // TODO: handle exception
       }
    }
