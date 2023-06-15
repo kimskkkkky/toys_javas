@@ -16,7 +16,7 @@ public class PollsWithDB {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_poll";
          String user = "root";
          String password = "!yojulab*";
 
@@ -132,25 +132,38 @@ public class PollsWithDB {
                // System.out.println(number3);
 
                System.out.println("설문 조사 통계");
-               query = "select count(USER_ID) AS MEM\n" + // 총 유저의 숫자를 카운트한다.
-                     "from statistics";
+               query = "select count(*) as users\n" + //
+                     "from \n" + //
+                     "(select user_id\n" + //
+                     "from statistics\n" + //
+                     "group by user_id) as T_user";
                ResultSet resultSet = statement.executeQuery(query);
                while (resultSet.next()) {
-                  System.out.println("- 총 설문자는 : " + resultSet.getInt("MEM"));
+                  System.out.println("- 총 설문자는 : " + resultSet.getInt("users"));
 
                }
 
                System.out.println("--- 문항 내에서 최대 갯수 번호----");
-               query = "select question.QUESTION, count(answer.ANSWER_ID) as MAX\n" + //
+               query = "select question.QUESTION\n" + //
                      "from statistics\n" + //
-                     "inner join answer\n" + //
-                     "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
                      "inner join question\n" + //
                      "on statistics.QUESTION_ID = question.QUESTION_ID\n" + //
-                     "group by question.QUESTION_ID";
+                     "group by question.QUESTION";
                resultSet = statement.executeQuery(query);
+
                while (resultSet.next()) {
-                  System.out.println(resultSet.getString("question.QUESTION") + " : " + resultSet.getString("MAX"));
+                  System.out.println(resultSet.getString("question.QUESTION") + " : ");
+                  // String query2 = "";
+                  // query2 = "select  count(statistics.ANSWER_ID) as counting\n" + //
+                  //       "from statistics\n" + //
+                  //       "inner join answer\n" + //
+                  //       "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                  //       "group by statistics.ANSWER_ID";
+                  // resultSet = statement.executeQuery(query2);
+                  // while (resultSet.next()) {
+                  //    System.out.println(resultSet.getInt("counting"));
+
+                  // } 추가 불가
 
                }
 
