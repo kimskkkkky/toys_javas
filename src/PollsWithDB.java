@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 import com.mysql.cj.protocol.Resultset;
 
-import polls.question;
-
 import java.sql.Statement;
 
 public class PollsWithDB {
@@ -27,33 +25,43 @@ public class PollsWithDB {
          Statement statement = connection.createStatement();
          String query = "";
          // E를 제외한 나머지 경우
-
+         HashMap<Integer, String> userMap = new HashMap<>();
          while (!workKey.equals("E")) { // E를 누르면 설문 종료
 
-            System.out.println("선택 입력 : ");
+            System.out.print("선택 입력 : ");
             workKey = scanner.nextLine();
 
             // P를 누른 경우
             if (workKey.equals("P")) { // P를 입력하면 설문가능 명단 띄우기
                System.out.println("- 설문자 가능 명단(가입 완료)");
                int number = 1; // 설문자 입력 번호
-               query = "SELECT `user`.`USER`\n" + //
+               query = "SELECT `user`.`USER` , `user`.`USER_ID`\n" + //
                      "FROM `user`\n";
                ResultSet resultSet = statement.executeQuery(query);
+
                while (resultSet.next()) {
                   System.out.println(number + "." + resultSet.getString("USER"));
+                  userMap.put(number, resultSet.getString("USER_ID"));
                   number = number + 1;
                }
-
-               System.out.print("- 설문자 번호 입력 : "); // 설문자 번호 입력
                int number2 = scanner.nextInt(); // 해당 설문자 번호 입력
-               // while (number2 >= 4){
-               while (number2 > 4 || number2 < 1) // 최대 4명이니깐 4 이상 숫자 입력시 Error 메시지 출력
-               {
+               System.out.print("- 설문자 번호 입력 : "); // 설문자 번호 입력
 
+               while (number2 < 1 || number2 > 4) // 최대 4명이니깐 4 이상 숫자 입력시 Error 메시지 출력
+               {
+                  statement = connection.createStatement();
+                  String query3 = "INSERT INTO statistics\n" + //
+                        "(ANSWER_ID, QUESTION_ID, USER_ID)\n" + //
+                        "VALUES\n" + //
+                        "('ANSWER_01','QUESTION_01', '" + userMap.get(number2) + "')";
+                  int count = statement.executeUpdate(query3);
+                  System.out.println(count);
                   System.out.println("-Error- 확인 후 입력 필요 ");
                   System.out.print("- 설문자 번호 입력 : ");
 
+                  // private static String getParticipantUserId(String participantId) {
+                  // 메인 파일의 USER 쿼리에서 해당 participantId에 해당하는 USER_ID를 추출하는 로직 구현
+                  // 추출한 USER_ID를 반환
                   number2 = scanner.nextInt();
                }
 
@@ -77,59 +85,6 @@ public class PollsWithDB {
 
                // S를 누른 경우
             } else if (workKey.equals("S")) {
-               // ResultSet resultSet = statement.executeQuery(query);
-
-               // int cnt = 1;
-               // HashMap<String, String> memHashMap = new HashMap<>();
-
-               // query = "select user_id\n" + //
-               // "from `user`";
-               // ResultSet resultSet = statement.executeQuery(query);
-
-               // while (resultSet.next()) {
-               // memHashMap.put(String.valueOf(cnt), resultSet.getString("USER_ID"));
-               // cnt = cnt + 1;
-               // }
-               // System.out.println(memHashMap.toString());
-
-               // HashMap<String, String> surHashMap = new HashMap<>();
-               // cnt = 1;
-               // query = "select QUESTION_id\n" + //
-               // "from question";
-               // resultSet = statement.executeQuery(query);
-
-               // while (resultSet.next()) {
-               // surHashMap.put(String.valueOf(cnt), resultSet.getString("QUESTION_ID"));
-               // cnt = cnt + 1;
-               // }
-               // System.out.println(surHashMap.toString());
-
-               // HashMap<String, String> ansHashMap = new HashMap<>();
-               // cnt = 1;
-               // query = "SELECT answer_id\n" + //
-               // "from answer";
-               // resultSet = statement.executeQuery(query);
-
-               // while (resultSet.next()) {
-               // ansHashMap.put(String.valueOf(cnt), resultSet.getString("answer_ID"));
-               // cnt = cnt + 1;
-               // }
-               // System.out.println(ansHashMap.toString());
-
-               // 통계테이블 delete문
-               // query = "delete from statistics";
-               // statement.executeUpdate(query);
-               // 통계테이블 insert문
-               // String userscanner = scanner.nextLine();
-               // String qursscanner = scanner.nextLine();
-               // String ansscanner = scanner.nextLine();
-               // // 해쉬 맵에서 확인한 키값을 통계테이블에 인서트 시킨다.
-               // query = "INSERT INTO statistics(USER_ID, QUESTION_ID, ANSWER_ID)\n" + //
-               // "VALUES ('" + memHashMap.get(userscanner) + "','" +
-               // surHashMap.get(qursscanner) + "','"
-               // + ansHashMap.get(ansscanner) + "')";
-               // int number3 = statement.executeUpdate(query);
-               // System.out.println(number3);
 
                System.out.println("설문 조사 통계");
                query = "select count(*) as users\n" + //
@@ -141,6 +96,20 @@ public class PollsWithDB {
                while (resultSet.next()) {
                   System.out.println("- 총 설문자는 : " + resultSet.getInt("users"));
 
+                  System.out.println("--- 답항 중심 ---");
+                  query = "select  answer.answer, count(statistics.ANSWER_ID) as CNT\n" + //
+                        "from statistics\n" + //
+                        "inner join answer\n" + //
+                        "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                        "group by statistics.ANSWER_ID";
+                  resultSet = statement.executeQuery(query);
+
+                  while (resultSet.next()) {
+                     System.out.println(resultSet.getString("answer.ANSWER") + " : " + resultSet.getString("CNT"));
+
+                  }
+
+                  // E를 눌러서 설문을 종료하는 경우
                }
 
                System.out.println("--- 문항 내에서 최대 갯수 번호----");
@@ -154,16 +123,16 @@ public class PollsWithDB {
                while (resultSet.next()) {
                   System.out.println(resultSet.getString("question.QUESTION") + " : ");
                   // String query2 = "";
-                  // query2 = "select  count(statistics.ANSWER_ID) as counting\n" + //
-                  //       "from statistics\n" + //
-                  //       "inner join answer\n" + //
-                  //       "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
-                  //       "group by statistics.ANSWER_ID";
+                  // query2 = "select count(statistics.ANSWER_ID) as counting\n" + //
+                  // "from statistics\n" + //
+                  // "inner join answer\n" + //
+                  // "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                  // "group by statistics.ANSWER_ID";
                   // resultSet = statement.executeQuery(query2);
                   // while (resultSet.next()) {
-                  //    System.out.println(resultSet.getInt("counting"));
+                  // System.out.println(resultSet.getInt("counting"));
 
-                  // } 추가 불가
+                  // } 추가 적이 맥스값을 못 집어 넣음.
 
                }
 
@@ -185,7 +154,9 @@ public class PollsWithDB {
             } else if (workKey.equals("E")) {
                System.out.println("----- 설문 종료 ------");
             } else {
+
                System.out.println("--- 입력 값을 확인 " + workKey);
+
             }
 
          }
