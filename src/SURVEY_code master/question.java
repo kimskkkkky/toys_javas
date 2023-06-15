@@ -48,7 +48,7 @@ public class question {
          // System.out.print("- 설문자 번호 입력 : "); // 설문자 번호 입력
 
          // E를 제외한 나머지 경우
-         
+
          while (!workKey.equals("E")) {
             System.out.println("선택 입력 : ");
 
@@ -109,16 +109,37 @@ public class question {
                // S를 누른 경우
 
             } else if (workKey.equals("S")) {
-               // System.out.println("설문 조사 통계");
-               // // E를 눌러서 설문을 종료하는 경우
-               // System.out.println("-------- poll Statistic-------------");
-               // System.out.print("-- 총 설문자: ");
-               // Statement sum_statement = connection.createStatement();
-               // String sum = "SELECT SUM(A)\n" + //
-               // "FROM(SELECT COUNT(DISTINCT USER_ID) AS A\n" + //
-               // "FROM statistics\n" + //
-               // "GROUP BY USER_ID) AS B;";
-               // sum =
+                                 System.out.println("설문 조사 통계");
+                  query = "select count(USER_ID) AS MEM\n" + // 총 유저의 숫자를 카운트한다.
+                        "from statistics";
+                  resultSet = statement.executeQuery(query);
+                  while (resultSet.next()) {
+                     System.out.println("- 총 설문자는 : " + resultSet.getInt("MEM"));
+
+                  }
+
+                  System.out.println("--- 문항 내에서 최대 갯수 번호----");
+                  query = "select question.QUESTION, count(answer.ANSWER_ID) as MAX\n" + //
+                        "from statistics\n" + //
+                        "inner join answer\n" + //
+                        "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                        "inner join question\n" + //
+                        "on statistics.QUESTION_ID = question.QUESTION_ID\n" + //
+                        "group by question.QUESTION_ID";
+                  resultSet = statement.executeQuery(query);
+                  while (resultSet.next()) {
+                     System.out.println(resultSet.getString("question.QUESTION") + " : " + resultSet.getString("MAX"));
+
+                  }
+
+                  System.out.println("--- 답항 중심 ---");
+                  query = "select  answer.answer, count(statistics.ANSWER_ID) as CNT\n" + //
+                        "from statistics\n" + //
+                        "inner join answer\n" + //
+                        "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                        "group by statistics.ANSWER_ID";
+                  resultSet = statement.executeQuery(query);
+
             } else {
                System.out.println("----- 설문 종료 ------");
                Statement delete_statement = connection.createStatement();

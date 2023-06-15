@@ -1,6 +1,6 @@
 # CODE MASTER _ team Project
 ## SURVEY TOPIC
-- 
+- 처음하는 Teamplays. 수업 만족도에 따른 설문 조사 이다.
 
 ## MEMBER & PART
 - 김동현 : 설문 메인
@@ -18,10 +18,11 @@
  - [ERD](./src/SURVEY_code%20master/SURVEY.vuerd)
 
 ## RUN
-- 🧇 VIDEO
+- IMAGE & VIDEO
+ * [코드실행](./src/SURVEY_codemaster/run.PNG)
  * [YOUTUBE](https://www.youtube.com/watch?v=tNcqNho6NTs)
 
 ## 프로젝트 소감
- - 김동현 :
- - 봉원희 : 
- - 김하늘 :
+ - 김동현 : 많이 배울 수 있는 기회였습니다!
+ - 봉원희 : 강사님과 사전 예제를 같이 하고 난 후 프로젝트를 확인 해봤지만 실제로 적용하는 것은 어려웠다. 
+ - 김하늘 : 도움을 많이 받았지만 내 코드를 봐주느라 알려준 팀원의 시간을 많이 빼았은 것 같아서 미안했다.
