@@ -1,18 +1,27 @@
-## Getting Started
+# CODE MASTER _ team Project
+## SURVEY TOPIC
+- 
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## MEMBER & PART
+- 김동현 : 설문 메인
+* [question.java](./src/SURVEY_code%20master/question.java)
 
-## Folder Structure
+- 김하늘 : 설문 진행
+* [PollsWithDB.java](./src/SURVEY_code%20master/PollsWithDB.java)
 
-The workspace contains two folders by default, where:
+- 봉원희 : 설문자별 답변 결과 및 질문별 총 답변 수 통계
+* [PollsWithDB.java](./src/SURVEY_code%20master/PollsWithDB.java)
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## REFER
+ - [화면정의서](./src/SURVEY_code%20master/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98%EC%84%9C_%EC%BD%94%EB%93%9C%EB%A7%88%EC%8A%A4%ED%84%B0.pdf)
+ - [naming_rule](./src/SURVEY_code%20master/Naming_Rule_%EC%BD%94%EB%93%9C%EB%A7%88%EC%8A%A4%ED%84%B0.pdf)
+ - [ERD](./src/SURVEY_code%20master/SURVEY.vuerd)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## RUN
+- 🧇 VIDEO
+ * [YOUTUBE](https://www.youtube.com/watch?v=tNcqNho6NTs)
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## 프로젝트 소감
+ - 김동현 :
+ - 봉원희 : 
+ - 김하늘 :

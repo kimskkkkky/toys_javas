@@ -14,7 +14,7 @@ public class PollsWithDB {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_poll";
          String user = "root";
          String password = "!yojulab*";
 
@@ -86,90 +86,15 @@ public class PollsWithDB {
                // S를 누른 경우
             } else if (workKey.equals("S")) {
 
-               HashMap<String, String> memHashMap = new HashMap<>();
-               int cnt = 1;
-               query = "select `user`\n" + //
-                     "from `user`";
+               System.out.println("설문 조사 통계");
+               query = "select count(*) as users\n" + //
+                     "from \n" + //
+                     "(select user_id\n" + //
+                     "from statistics\n" + //
+                     "group by user_id) as T_user";
                ResultSet resultSet = statement.executeQuery(query);
                while (resultSet.next()) {
-                  memHashMap.put(String.valueOf(cnt), resultSet.getString("USER"));
-
-                  // ResultSet resultSet = statement.executeQuery(query);
-
-                  // int cnt = 1;
-                  // HashMap<String, String> memHashMap = new HashMap<>();
-
-                  // query = "select user_id\n" + //
-                  // "from `user`";
-                  // ResultSet resultSet = statement.executeQuery(query);
-
-                  // while (resultSet.next()) {
-                  // memHashMap.put(String.valueOf(cnt), resultSet.getString("USER_ID"));
-                  // cnt = cnt + 1;
-                  // }
-                  // System.out.println(memHashMap.toString());
-
-                  // HashMap<String, String> surHashMap = new HashMap<>();
-                  // cnt = 1;
-                  // query = "select QUESTION_id\n" + //
-                  // "from question";
-                  // resultSet = statement.executeQuery(query);
-
-                  // while (resultSet.next()) {
-                  // surHashMap.put(String.valueOf(cnt), resultSet.getString("QUESTION_ID"));
-                  // cnt = cnt + 1;
-                  // }
-                  // System.out.println(surHashMap.toString());
-
-                  // HashMap<String, String> ansHashMap = new HashMap<>();
-                  // cnt = 1;
-                  // query = "SELECT answer_id\n" + //
-                  // "from answer";
-                  // resultSet = statement.executeQuery(query);
-
-                  // while (resultSet.next()) {
-                  // ansHashMap.put(String.valueOf(cnt), resultSet.getString("answer_ID"));
-                  // cnt = cnt + 1;
-                  // }
-                  // System.out.println(ansHashMap.toString());
-
-                  // 통계테이블 delete문
-                  // query = "delete from statistics";
-                  // statement.executeUpdate(query);
-                  // 통계테이블 insert문
-                  // String userscanner = scanner.nextLine();
-                  // String qursscanner = scanner.nextLine();
-                  // String ansscanner = scanner.nextLine();
-                  // // 해쉬 맵에서 확인한 키값을 통계테이블에 인서트 시킨다.
-                  // query = "INSERT INTO statistics(USER_ID, QUESTION_ID, ANSWER_ID)\n" + //
-                  // "VALUES ('" + memHashMap.get(userscanner) + "','" +
-                  // surHashMap.get(qursscanner) + "','"
-                  // + ansHashMap.get(ansscanner) + "')";
-                  // int number3 = statement.executeUpdate(query);
-                  // System.out.println(number3);
-
-                  System.out.println("설문 조사 통계");
-                  query = "select count(USER_ID) AS MEM\n" + // 총 유저의 숫자를 카운트한다.
-                        "from statistics";
-                  resultSet = statement.executeQuery(query);
-                  while (resultSet.next()) {
-                     System.out.println("- 총 설문자는 : " + resultSet.getInt("MEM"));
-
-                  }
-
-                  System.out.println("--- 문항 내에서 최대 갯수 번호----");
-                  query = "select question.QUESTION, count(answer.ANSWER_ID) as MAX\n" + //
-                        "from statistics\n" + //
-                        "inner join answer\n" + //
-                        "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
-                        "inner join question\n" + //
-                        "on statistics.QUESTION_ID = question.QUESTION_ID\n" + //
-                        "group by question.QUESTION_ID";
-                  resultSet = statement.executeQuery(query);
-                  while (resultSet.next()) {
-                     System.out.println(resultSet.getString("question.QUESTION") + " : " + resultSet.getString("MAX"));
-
-                  }
+                  System.out.println("- 총 설문자는 : " + resultSet.getInt("users"));
 
                   System.out.println("--- 답항 중심 ---");
                   query = "select  answer.answer, count(statistics.ANSWER_ID) as CNT\n" + //
@@ -186,6 +111,46 @@ public class PollsWithDB {
 
                   // E를 눌러서 설문을 종료하는 경우
                }
+
+               System.out.println("--- 문항 내에서 최대 갯수 번호----");
+               query = "select question.QUESTION\n" + //
+                     "from statistics\n" + //
+                     "inner join question\n" + //
+                     "on statistics.QUESTION_ID = question.QUESTION_ID\n" + //
+                     "group by question.QUESTION";
+               resultSet = statement.executeQuery(query);
+
+               while (resultSet.next()) {
+                  System.out.println(resultSet.getString("question.QUESTION") + " : ");
+                  // String query2 = "";
+                  // query2 = "select count(statistics.ANSWER_ID) as counting\n" + //
+                  // "from statistics\n" + //
+                  // "inner join answer\n" + //
+                  // "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                  // "group by statistics.ANSWER_ID";
+                  // resultSet = statement.executeQuery(query2);
+                  // while (resultSet.next()) {
+                  // System.out.println(resultSet.getInt("counting"));
+
+                  // } 추가 적이 맥스값을 못 집어 넣음.
+
+               }
+
+               System.out.println("--- 답항 중심 ---");
+               query = "select  answer.answer, count(statistics.ANSWER_ID) as CNT\n" + //
+                     "from statistics\n" + //
+                     "inner join answer\n" + //
+                     "on statistics.ANSWER_ID = answer.ANSWER_ID\n" + //
+                     "group by statistics.ANSWER_ID";
+               resultSet = statement.executeQuery(query);
+
+               while (resultSet.next()) {
+                  System.out.println(resultSet.getString("answer.ANSWER") + " : " + resultSet.getString("CNT"));
+
+               }
+
+               // E를 눌러서 설문을 종료하는 경우
+
             } else if (workKey.equals("E")) {
                System.out.println("----- 설문 종료 ------");
             } else {
