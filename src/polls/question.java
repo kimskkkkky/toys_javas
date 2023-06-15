@@ -23,6 +23,8 @@ public class question {
          Scanner scanner = new Scanner(System.in);
          String workKey = "A";
          String usernumber = "";
+         int order = 0;
+
 
          // E를 제외한 나머지 경우
          while (!workKey.equals("E")) {
@@ -56,14 +58,14 @@ public class question {
                   Statement statement2 = connection.createStatement();
                   ResultSet resultSet2 = statement2.executeQuery(query2);
                   while (resultSet2.next()) {
-                     number = 0;
-                     number = number + 1;
+                     
+                     order = order + 1;
                      System.out.println(resultSet2.getString("QUESTION"));
                      System.out.println();
                      System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
                     String reply = scanner.nextLine();
                      String Answernumber = "ANSWER_0" + reply;
-                     String Questionnumber = "QUESTION_0" + number;
+                     String Questionnumber = "QUESTION_0" + order;
                      System.out.println();
                      /// 결과 INSERT
 
@@ -83,11 +85,22 @@ public class question {
                   // S를 누른 경우
                
             } else if (workKey.equals("S")) {
-               System.out.println("설문 조사 통계");
-               // E를 눌러서 설문을 종료하는 경우
-            
+            //    System.out.println("설문 조사 통계");
+            //    // E를 눌러서 설문을 종료하는 경우
+            // System.out.println("-------- poll Statistic-------------");
+            // System.out.print("-- 총 설문자: ");
+            // Statement sum_statement = connection.createStatement(); 
+            // String sum = "SELECT SUM(A)\n" + //
+            //       "FROM(SELECT COUNT(DISTINCT USER_ID) AS A\n" + //
+            //       "FROM statistics\n" + //
+            //       "GROUP BY USER_ID) AS B;";
+            //    sum = 
             } else {
                System.out.println("----- 설문 종료 ------");
+               Statement delete_statement = connection.createStatement();
+               String delete = "DELETE FROM statistics;";
+               int delete_count = delete_statement.executeUpdate(delete);
+               System.out.println();
             }
          } 
 
