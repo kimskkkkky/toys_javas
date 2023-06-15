@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 import com.mysql.cj.protocol.Resultset;
 
-import polls.question;
-
 import java.sql.Statement;
 
 public class PollsWithDB {
@@ -15,7 +13,7 @@ public class PollsWithDB {
       try {
          // - MySQL workbench 실행 : JDBC
          // - User/password와 접속 IP:port 접속
-         String url = "jdbc:mysql://127.0.0.1:3306/db_poll";
+         String url = "jdbc:mysql://127.0.0.1:3306/db_polls";
          String user = "root";
          String password = "!yojulab*";
 
@@ -28,38 +26,47 @@ public class PollsWithDB {
          // E를 제외한 나머지 경우
          while (!workKey.equals("E")) { // E를 누르면 설문 종료
             System.out.print("선택 입력 : ");
-            workKey = scanner.nextLine();            
-            // P를 누른 경우 
+            workKey = scanner.nextLine();
+            // P를 누른 경우
             if (workKey.equals("P")) { // P를 입력하면 설문가능 명단 띄우기
                System.out.println("- 설문자 가능 명단(가입 완료)");
                int number = 1; // 설문자 입력 번호
-               query = "SELECT `user`.`USER`\n" + //
+               query = "SELECT `user`.`USER` , `user`.`USER_ID`\n" + //
                      "FROM `user`\n";
-               ResultSet resultSet = statement.executeQuery(query); 
+               ResultSet resultSet = statement.executeQuery(query);
+               HashMap<Integer, String> userMap = new HashMap<>();
                while (resultSet.next()) {
                   System.out.println(number + "." + resultSet.getString("USER"));
+                  userMap.put(number, resultSet.getString("USER_ID"));
                   number = number + 1;
-               }  
-               System.out.print("- 설문자 번호 입력 : " ); // 설문자 번호 입력
+
+               }
+               System.out.print("- 설문자 번호 입력 : "); // 설문자 번호 입력
                int number2 = scanner.nextInt(); // 해당 설문자 번호 입력
-               // while (number2 >= 4){
-               while (number2 > 4) // 최대 4명이니깐 4 이상 숫자 입력시 Error 메시지 출력
+
+               while (number2 < 1 || number2 > 4) // 최대 4명이니깐 4 이상 숫자 입력시 Error 메시지 출력
                {
                   System.out.println("-Error- 확인 후 입력 필요 ");
-                  number2 = scanner.nextInt();
+                  System.out.print("- 설문자 번호 입력 : ");
+                  number2 = scanner.nextInt();                  
                }
-                  System.out.println("-- 설문시작 -- ");
-            
-            // 여기까지 복사
+               System.out.println("-- 설문시작 -- ");
+               System.out.println();
+
+               // private static String getParticipantUserId(String participantId) {
+               // 메인 파일의 USER 쿼리에서 해당 participantId에 해당하는 USER_ID를 추출하는 로직 구현
+               // 추출한 USER_ID를 반환
+
+               // 여기까지 복사
 
                // S를 누른 경우
             } else if (workKey.equals("S")) {
                HashMap<String, String> memHashMap = new HashMap<>();
                int cnt = 1;
-               query="select `user`\n" + //
+               query = "select `user`\n" + //
                      "from `user`";
                ResultSet resultSet = statement.executeQuery(query);
-               while(resultSet.next()){
+               while (resultSet.next()) {
                   memHashMap.put(String.valueOf(cnt), resultSet.getString("USER"));
 
                }
@@ -112,7 +119,7 @@ public class PollsWithDB {
                // E를 눌러서 설문을 종료하는 경우
             } else if (workKey.equals("E")) {
                System.out.println("----- 설문 종료 ------");
-            }  else{
+            } else {
 
             }
          }
@@ -127,7 +134,9 @@ public class PollsWithDB {
          // 답변 맵
          // 질문 - 답변 입력
 
-      } catch (Exception e) {
+      } catch (
+
+      Exception e) {
          System.out.println(e.getMessage());
       }
    }
