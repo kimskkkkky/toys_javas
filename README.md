@@ -22,6 +22,6 @@
  * [YOUTUBE](https://www.youtube.com/watch?v=tNcqNho6NTs)
 
 ## 프로젝트 소감
- - 김동현 :
+ - 김동현 : 많이 배울 수 있는 기회였습니다!
  - 봉원희 : 
  - 김하늘 :
