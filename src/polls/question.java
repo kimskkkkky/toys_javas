@@ -23,6 +23,8 @@ public class question {
          Scanner scanner = new Scanner(System.in);
          String workKey = "A";
          String usernumber = "";
+         int order = 0;
+
 
          // E를 제외한 나머지 경우
          while (!workKey.equals("E")) {
@@ -56,14 +58,14 @@ public class question {
                   Statement statement2 = connection.createStatement();
                   ResultSet resultSet2 = statement2.executeQuery(query2);
                   while (resultSet2.next()) {
-                     number = 0;
-                     number = number + 1;
+                     
+                     order = order + 1;
                      System.out.println(resultSet2.getString("QUESTION"));
                      System.out.println();
                      System.out.println("(1) 전혀 아니다. (2) 아니다. (3) 그렇다. (4) 매우 그렇다.");
                     String reply = scanner.nextLine();
                      String Answernumber = "ANSWER_0" + reply;
-                     String Questionnumber = "QUESTION_0" + number;
+                     String Questionnumber = "QUESTION_0" + order;
                      System.out.println();
                      /// 결과 INSERT
 
