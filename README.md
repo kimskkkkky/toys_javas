@@ -18,7 +18,8 @@
  - [ERD](./src/SURVEY_code%20master/SURVEY.vuerd)
 
 ## RUN
-- 🧇 VIDEO
+- - IMAGE & VIDEO
+ * [코드실행](./src/SURVEY_codemaster/run.PNG)
  * [YOUTUBE](https://www.youtube.com/watch?v=tNcqNho6NTs)
 
 ## 프로젝트 소감
