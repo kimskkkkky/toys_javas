@@ -18,7 +18,7 @@
  - [ERD](./src/SURVEY_code%20master/SURVEY.vuerd)
 
 ## RUN
-- - IMAGE & VIDEO
+- IMAGE & VIDEO
  * [코드실행](./src/SURVEY_codemaster/run.PNG)
  * [YOUTUBE](https://www.youtube.com/watch?v=tNcqNho6NTs)
 
