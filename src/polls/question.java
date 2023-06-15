@@ -85,11 +85,22 @@ public class question {
                   // S를 누른 경우
                
             } else if (workKey.equals("S")) {
-               System.out.println("설문 조사 통계");
-               // E를 눌러서 설문을 종료하는 경우
-            
+            //    System.out.println("설문 조사 통계");
+            //    // E를 눌러서 설문을 종료하는 경우
+            // System.out.println("-------- poll Statistic-------------");
+            // System.out.print("-- 총 설문자: ");
+            // Statement sum_statement = connection.createStatement(); 
+            // String sum = "SELECT SUM(A)\n" + //
+            //       "FROM(SELECT COUNT(DISTINCT USER_ID) AS A\n" + //
+            //       "FROM statistics\n" + //
+            //       "GROUP BY USER_ID) AS B;";
+            //    sum = 
             } else {
                System.out.println("----- 설문 종료 ------");
+               Statement delete_statement = connection.createStatement();
+               String delete = "DELETE FROM statistics;";
+               int delete_count = delete_statement.executeUpdate(delete);
+               System.out.println();
             }
          } 
 
